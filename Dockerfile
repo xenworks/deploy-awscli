@@ -1,7 +1,7 @@
 FROM alpine:latest
 ENV GLIBC_VER=2.31-r0
 
-COPY --chmod=755 lumen-deploy.sh /usr/bin
+COPY lumen-deploy.sh /usr/bin
 # install glibc compatibility for alpine
 RUN apk update && \
     apk --no-cache add \
@@ -31,6 +31,7 @@ RUN apk update && \
         curl \
     && rm glibc-${GLIBC_VER}.apk \
     && rm glibc-bin-${GLIBC_VER}.apk \
-    && rm -rf /var/cache/apk/*
+    && rm -rf /var/cache/apk/* \
+    && chmod +x /usr/bin/lumen-deploy.sh
 
 ENTRYPOINT [ "sh" ]
