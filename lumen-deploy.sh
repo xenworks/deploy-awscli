@@ -6,7 +6,8 @@ echo $SERVICES #if this contains commons...
 
 if [[ ${SERVICES[@]} =~ "commons" ]]; then
   echo "Commons has been updated; Let's update all!"
-  SERVICES=`find . -maxdepth 1 -mindepth 1 -type d -printf "%f\n"`
+  #SERVICES=`find . -maxdepth 1 -mindepth 1 -type d -printf "%f\n"`
+  SERVICES=`find . -maxdepth 1 -mindepth 1 -type d -print | sed 's/\.\///g'`
 fi
 
 for SERVICE in $SERVICES; do
