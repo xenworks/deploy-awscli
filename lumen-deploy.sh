@@ -2,6 +2,7 @@ echo "Trying to get which services have been updated!"
 IGNORE=".idea commons"
 SERVICES=$(git diff --name-only HEAD~1..HEAD | awk -F'/' 'NF!=1{print $1}' | sort -u)
 echo $SERVICES
+# TO DO: trigger for all if commons
 
 for SERVICE in $SERVICES; do
   if [[ ! " ${IGNORE[@]} " =~ "${SERVICE}" ]]; then
@@ -11,5 +12,6 @@ for SERVICE in $SERVICES; do
     docker build . -t ${ECR_URI}/${IMAGE_NAME} --build-arg svc=${SERVICE} --build-arg env=${BITBUCKET_DEPLOYMENT_ENVIRONMENT}
     docker tag ${ECR_URI}/${IMAGE_NAME} ${ECR_URI}:${IMAGE_NAME}
     docker push ${ECR_URI}:${IMAGE_NAME}
+    aws ecs update-service --cluster ${ECS_CLUSTER} --service ${SERVICE}-svc --force-new-deployment --region ${AWS_REGION}
   fi
 done
