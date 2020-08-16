@@ -9,6 +9,7 @@ RUN apk update && \
         curl \
         git \
         openssh-client \
+        rsync \
         bash \
         unzip \
     && curl -sL https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub -o /etc/apk/keys/sgerrand.rsa.pub \
