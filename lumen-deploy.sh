@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 echo "Trying to get which services have been updated!"
-IGNORE=".git .idea commons bi"
+IGNORE=".git .idea commons"
 SERVICES=$(git diff --name-only HEAD~1..HEAD | awk -F'/' 'NF!=1{print $1}' | sort -u)
 echo $SERVICES #if this contains commons...
 
